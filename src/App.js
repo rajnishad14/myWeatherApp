@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react';
 import Display from "./components/Display"
 import './App.css';
-import { Dimmer, Loader } from 'semantic-ui-react';
+// import { Dimmer, Loader } from 'semantic-ui-react';
+import { Form, Button, Container } from 'react-bootstrap';
 
 function App() {
 
-  const [lat, setLat] = useState([]);
-  const [long, setLong] = useState([]);
+  const [cityName, setCityName] = useState("");
+  const [city, setCity] = useState("");
   const [data, setData] = useState([]);
+  const handleChange = (event) => {
+    setCityName(event.target.value);
+  }
+  const handleClick = () => {
+    setCity(cityName)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude);
-        setLong(position.coords.longitude);
-      });
-
-      await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=4c496af33d732297c30b641b3b235e47`)
+      await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=317623db6367401294fc05a548e9ebf8`)
         .then(res => res.json())
         .then(result => {
           setData(result)
@@ -24,19 +26,37 @@ function App() {
     }
     fetchData();
   }, //eslint-disable-next-line 
-    [lat, long])
+    [city])
 
 
 
   return (
     <div className='App'>
-      {(typeof data.main != 'undefined') ? (
-        <Display weatherData={data} />
-      ) : (
-        <Dimmer active>
-          <Loader>Loading..</Loader>
-        </Dimmer>
-      )}
+      <Container>
+        <Form>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>City</Form.Label>
+            <Form.Control type="text" placeholder="Enter city"
+              value={cityName}
+              onChange={handleChange} />
+            <Form.Text className="text-muted">
+              Enter city which weather you wan to fetch.
+          </Form.Text>
+            {/* <p className="text-danger">{error}</p> */}
+          </Form.Group>
+          <Button variant="primary" onClick={handleClick}>Submit</Button>
+        </Form>
+        <br/>
+        {(typeof data.main != 'undefined') ? (
+          <Display weatherData={data} />
+        ) : (
+          // <Dimmer active>
+          //   <Loader>Loading..</Loader>
+          // </Dimmer>
+          <div></div>
+        )}
+      </Container>
+
     </div>
   );
 }
