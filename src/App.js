@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=317623db6367401294fc05a548e9ebf8`)
+      await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=317623db6367401294fc05a548e9ebf8`)
         .then(res => res.json())
         .then(result => {
           setData(result)
