@@ -36,7 +36,7 @@ function App() {
           <Display weatherData={data} />
         ) : (
           <Dimmer active>
-            <Loader>Loading..</Loader>
+            <Loader>Please provide location access</Loader>
           </Dimmer>
         )}
       </Container>
