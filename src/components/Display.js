@@ -2,6 +2,7 @@ import moment from "moment";
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Button } from "semantic-ui-react";
+import "./display.css"
 
 const refresh = () => {
   window.location.reload();
@@ -10,7 +11,7 @@ const Display = ({ weatherData }) => {
   return (
     <>
       <Card>
-        <Card.Header>
+        <Card.Header className="header">
           <div className="d-flex justify-content-between">
             <div className="p-2 col-example text-left">
               Weather in: <strong>{weatherData.name}</strong>
@@ -18,8 +19,7 @@ const Display = ({ weatherData }) => {
             <div className="p-2 col-example text-left">
               <Button
                 className="button d-flex flex-row-reverse"
-                inverted
-                color="green"
+                color="black"
                 circular
                 icon="refresh"
                 onClick={refresh}
